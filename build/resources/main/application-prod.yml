@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:wexdb}
+    driver-class-name: org.postgresql.Driver
+    username: ${DB_USERNAME:wex}
+    password: ${DB_PASSWORD:wex}
+
+  h2:
+    console:
+      enabled: false
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+logging:
+  level:
+    com.wex: INFO
+    org.springframework.web: WARN

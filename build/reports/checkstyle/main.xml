@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="10.18.1">
+<file name="/Users/bruno/study/wex/wex-purchase-transaction/src/main/java/com/wex/purchasetransaction/PurchaseTransactionApplication.java">
+</file>
+<file name="/Users/bruno/study/wex/wex-purchase-transaction/src/main/java/com/wex/purchasetransaction/application/dto/ConvertedPurchaseTransactionResult.java">
+</file>
+<file name="/Users/bruno/study/wex/wex-purchase-transaction/src/main/java/com/wex/purchasetransaction/application/dto/StorePurchaseTransactionCommand.java">
+</file>
+<file name="/Users/bruno/study/wex/wex-purchase-transaction/src/main/java/com/wex/purchasetransaction/application/dto/PurchaseTransactionResult.java">
+</file>
+<file name="/Users/bruno/study/wex/wex-purchase-transaction/src/main/java/com/wex/purchasetransaction/application/service/StorePurchaseTransactionService.java">
+</file>
+<file name="/Users/bruno/study/wex/wex-purchase-transaction/src/main/java/com/wex/purchasetransaction/application/service/RetrievePurchaseTransactionService.java">
+</file>
+<file name="/Users/bruno/study/wex/wex-purchase-transaction/src/main/java/com/wex/purchasetransaction/application/port/out/ExchangeRatePort.java">
+</file>
+<file name="/Users/bruno/study/wex/wex-purchase-transaction/src/main/java/com/wex/purchasetransaction/application/port/in/RetrievePurchaseTransactionUseCase.java">
+</file>
+<file name="/Users/bruno/study/wex/wex-purchase-transaction/src/main/java/com/wex/purchasetransaction/application/port/in/StorePurchaseTransactionUseCase.java">
+</file>
+<file name="/Users/bruno/study/wex/wex-purchase-transaction/src/main/java/com/wex/purchasetransaction/infrastructure/config/WebClientConfig.java">
+</file>
+<file name="/Users/bruno/study/wex/wex-purchase-transaction/src/main/java/com/wex/purchasetransaction/infrastructure/config/OpenApiConfig.java">
+</file>
+<file name="/Users/bruno/study/wex/wex-purchase-transaction/src/main/java/com/wex/purchasetransaction/infrastructure/config/CacheConfig.java">
+</file>
+<file name="/Users/bruno/study/wex/wex-purchase-transaction/src/main/java/com/wex/purchasetransaction/infrastructure/persistence/PurchaseTransactionRepositoryAdapter.java">
+</file>
+<file name="/Users/bruno/study/wex/wex-purchase-transaction/src/main/java/com/wex/purchasetransaction/infrastructure/persistence/PurchaseTransactionJpaEntity.java">
+</file>
+<file name="/Users/bruno/study/wex/wex-purchase-transaction/src/main/java/com/wex/purchasetransaction/infrastructure/persistence/PurchaseTransactionJpaRepository.java">
+</file>
+<file name="/Users/bruno/study/wex/wex-purchase-transaction/src/main/java/com/wex/purchasetransaction/infrastructure/external/treasury/NoExchangeRateFoundException.java">
+</file>
+<file name="/Users/bruno/study/wex/wex-purchase-transaction/src/main/java/com/wex/purchasetransaction/infrastructure/external/treasury/CurrencyMappingProperties.java">
+</file>
+<file name="/Users/bruno/study/wex/wex-purchase-transaction/src/main/java/com/wex/purchasetransaction/infrastructure/external/treasury/TreasuryApiClient.java">
+</file>
+<file name="/Users/bruno/study/wex/wex-purchase-transaction/src/main/java/com/wex/purchasetransaction/infrastructure/external/treasury/TreasuryApiProperties.java">
+</file>
+<file name="/Users/bruno/study/wex/wex-purchase-transaction/src/main/java/com/wex/purchasetransaction/infrastructure/external/treasury/TreasuryApiResponse.java">
+</file>
+<file name="/Users/bruno/study/wex/wex-purchase-transaction/src/main/java/com/wex/purchasetransaction/infrastructure/external/treasury/CurrencyMapper.java">
+</file>
+<file name="/Users/bruno/study/wex/wex-purchase-transaction/src/main/java/com/wex/purchasetransaction/domain/valueobject/Money.java">
+</file>
+<file name="/Users/bruno/study/wex/wex-purchase-transaction/src/main/java/com/wex/purchasetransaction/domain/repository/PurchaseTransactionRepository.java">
+</file>
+<file name="/Users/bruno/study/wex/wex-purchase-transaction/src/main/java/com/wex/purchasetransaction/domain/entity/PurchaseTransaction.java">
+</file>
+<file name="/Users/bruno/study/wex/wex-purchase-transaction/src/main/java/com/wex/purchasetransaction/domain/exception/UnsupportedCurrencyException.java">
+</file>
+<file name="/Users/bruno/study/wex/wex-purchase-transaction/src/main/java/com/wex/purchasetransaction/domain/exception/TransactionNotFoundException.java">
+</file>
+<file name="/Users/bruno/study/wex/wex-purchase-transaction/src/main/java/com/wex/purchasetransaction/domain/exception/CurrencyConversionException.java">
+</file>
+<file name="/Users/bruno/study/wex/wex-purchase-transaction/src/main/java/com/wex/purchasetransaction/presentation/dto/response/PurchaseTransactionResponse.java">
+</file>
+<file name="/Users/bruno/study/wex/wex-purchase-transaction/src/main/java/com/wex/purchasetransaction/presentation/dto/response/ConvertedPurchaseTransactionResponse.java">
+</file>
+<file name="/Users/bruno/study/wex/wex-purchase-transaction/src/main/java/com/wex/purchasetransaction/presentation/dto/request/StorePurchaseTransactionRequest.java">
+</file>
+<file name="/Users/bruno/study/wex/wex-purchase-transaction/src/main/java/com/wex/purchasetransaction/presentation/mapper/PurchaseTransactionMapper.java">
+</file>
+<file name="/Users/bruno/study/wex/wex-purchase-transaction/src/main/java/com/wex/purchasetransaction/presentation/controller/PurchaseTransactionController.java">
+</file>
+<file name="/Users/bruno/study/wex/wex-purchase-transaction/src/main/java/com/wex/purchasetransaction/presentation/exception/GlobalExceptionHandler.java">
+</file>
+</checkstyle>

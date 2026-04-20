@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE suppressions PUBLIC
+    "-//Checkstyle//DTD SuppressionFilter Configuration 1.0//EN"
+    "https://checkstyle.org/dtds/suppressions_1_0.dtd">
+
+<suppressions>
+    <!-- Spring Boot main class is not a traditional utility class -->
+    <suppress checks="HideUtilityClassConstructor"
+              files="PurchaseTransactionApplication\.java"/>
+
+    <!-- Test methods use BDD-style naming: methodName_shouldDo_whenCondition -->
+    <suppress checks="MethodName" files=".*Test\.java"/>
+    <suppress checks="MethodName" files=".*IT\.java"/>
+    <suppress checks="MethodName" files=".*E2ETest\.java"/>
+</suppressions>

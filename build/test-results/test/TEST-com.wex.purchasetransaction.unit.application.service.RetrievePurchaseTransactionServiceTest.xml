@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.wex.purchasetransaction.unit.application.service.RetrievePurchaseTransactionServiceTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2026-04-20T15:27:14" hostname="Marcuss-MBP" time="0.71">
+  <properties/>
+  <testcase name="retrieve_shouldReturnRate_whenRecordDateEqualsExactPurchaseDate()" classname="com.wex.purchasetransaction.unit.application.service.RetrievePurchaseTransactionServiceTest" time="0.639"/>
+  <testcase name="retrieve_shouldHandleMixedCaseCurrencyCode()" classname="com.wex.purchasetransaction.unit.application.service.RetrievePurchaseTransactionServiceTest" time="0.007"/>
+  <testcase name="retrieve_shouldThrowWhenNoExchangeRateWithin6Months()" classname="com.wex.purchasetransaction.unit.application.service.RetrievePurchaseTransactionServiceTest" time="0.007"/>
+  <testcase name="retrieve_shouldReturnRate_whenRecordDateIsExactly6MonthsBeforePurchase()" classname="com.wex.purchasetransaction.unit.application.service.RetrievePurchaseTransactionServiceTest" time="0.004"/>
+  <testcase name="retrieve_shouldHandleVerySmallAmountWithHighRate()" classname="com.wex.purchasetransaction.unit.application.service.RetrievePurchaseTransactionServiceTest" time="0.005"/>
+  <testcase name="retrieve_shouldRoundConvertedAmountToTwoDecimalPlaces()" classname="com.wex.purchasetransaction.unit.application.service.RetrievePurchaseTransactionServiceTest" time="0.005"/>
+  <testcase name="retrieve_shouldHandleHighPrecisionExchangeRate()" classname="com.wex.purchasetransaction.unit.application.service.RetrievePurchaseTransactionServiceTest" time="0.005"/>
+  <testcase name="retrieve_shouldNormalizeCurrencyCodeToUppercase()" classname="com.wex.purchasetransaction.unit.application.service.RetrievePurchaseTransactionServiceTest" time="0.004"/>
+  <testcase name="retrieve_shouldThrowWhenTransactionNotFound()" classname="com.wex.purchasetransaction.unit.application.service.RetrievePurchaseTransactionServiceTest" time="0.003"/>
+  <testcase name="retrieve_shouldThrowWhenCurrencyCodeUnsupported()" classname="com.wex.purchasetransaction.unit.application.service.RetrievePurchaseTransactionServiceTest" time="0.003"/>
+  <testcase name="retrieve_shouldReturnConvertedTransaction()" classname="com.wex.purchasetransaction.unit.application.service.RetrievePurchaseTransactionServiceTest" time="0.004"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

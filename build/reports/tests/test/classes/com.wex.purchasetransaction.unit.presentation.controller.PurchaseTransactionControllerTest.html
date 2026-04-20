@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - PurchaseTransactionControllerTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>PurchaseTransactionControllerTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.wex.purchasetransaction.unit.presentation.controller.html">com.wex.purchasetransaction.unit.presentation.controller</a> &gt; PurchaseTransactionControllerTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">23</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.437s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">retrieve_shouldNormalizeCurrencyCodeToUppercase()</td>
+<td class="success">0.011s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">retrieve_shouldReturn200WithConvertedAmount()</td>
+<td class="success">0.005s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">retrieve_shouldReturn400WhenCurrencyParameterIsMissing()</td>
+<td class="success">0.006s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">retrieve_shouldReturn400WhenCurrencyUnsupported()</td>
+<td class="success">0.064s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">retrieve_shouldReturn400WhenIdIsEmpty()</td>
+<td class="success">0.011s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">retrieve_shouldReturn400WhenIdIsNotValidUuid()</td>
+<td class="success">0.007s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">retrieve_shouldReturn404WhenTransactionNotFound()</td>
+<td class="success">0.008s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">retrieve_shouldReturn422WhenNoRateAvailable()</td>
+<td class="success">0.005s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">store_shouldAcceptDescriptionWithSpecialCharacters()</td>
+<td class="success">0.187s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">store_shouldAcceptMinimumValidAmount()</td>
+<td class="success">0.006s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">store_shouldAcceptTransactionDateAsToday()</td>
+<td class="success">0.005s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">store_shouldReturn201WhenValidRequest()</td>
+<td class="success">0.008s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">store_shouldReturn400WhenAmountBelowMinimum()</td>
+<td class="success">0.005s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">store_shouldReturn400WhenAmountIsNegative()</td>
+<td class="success">0.008s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">store_shouldReturn400WhenAmountIsZero()</td>
+<td class="success">0.041s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">store_shouldReturn400WhenBodyIsEmpty()</td>
+<td class="success">0.004s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">store_shouldReturn400WhenBodyIsMalformedJson()</td>
+<td class="success">0.008s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">store_shouldReturn400WhenContentTypeIsNotJson()</td>
+<td class="success">0.010s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">store_shouldReturn400WhenDescriptionExceeds50Chars()</td>
+<td class="success">0.011s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">store_shouldReturn400WhenDescriptionIsBlank()</td>
+<td class="success">0.005s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">store_shouldReturn400WhenTransactionDateIsInFuture()</td>
+<td class="success">0.005s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">store_shouldReturn400WhenTransactionDateIsInvalidFormat()</td>
+<td class="success">0.011s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">store_shouldReturn400WhenTransactionDateIsMissing()</td>
+<td class="success">0.006s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>2026-04-20T12:27:15.577-03:00  INFO 6997 --- [wex-purchase-transaction] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.wex.purchasetransaction.unit.presentation.controller.PurchaseTransactionControllerTest]: PurchaseTransactionControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-04-20T12:27:15.629-03:00  INFO 6997 --- [wex-purchase-transaction] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.wex.purchasetransaction.PurchaseTransactionApplication for test class com.wex.purchasetransaction.unit.presentation.controller.PurchaseTransactionControllerTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.4)
+
+2026-04-20T12:27:15.752-03:00  INFO 6997 --- [wex-purchase-transaction] [    Test worker] .u.p.c.PurchaseTransactionControllerTest : Starting PurchaseTransactionControllerTest using Java 21.0.9 with PID 6997 (started by bruno in /Users/bruno/study/wex/wex-purchase-transaction)
+2026-04-20T12:27:15.753-03:00  INFO 6997 --- [wex-purchase-transaction] [    Test worker] .u.p.c.PurchaseTransactionControllerTest : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2026-04-20T12:27:16.413-03:00  INFO 6997 --- [wex-purchase-transaction] [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-04-20T12:27:16.414-03:00  INFO 6997 --- [wex-purchase-transaction] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-04-20T12:27:16.415-03:00  INFO 6997 --- [wex-purchase-transaction] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2026-04-20T12:27:16.475-03:00  INFO 6997 --- [wex-purchase-transaction] [    Test worker] .u.p.c.PurchaseTransactionControllerTest : Started PurchaseTransactionControllerTest in 0.822 seconds (process running for 40.683)
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 8.10.2</a> at Apr 20, 2026, 12:27:17 PM</p>
+</div>
+</div>
+</body>
+</html>

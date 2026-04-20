@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.wex.purchasetransaction.unit.domain.entity.MoneyTest" tests="23" skipped="0" failures="0" errors="0" timestamp="2026-04-20T15:27:15" hostname="Marcuss-MBP" time="0.041">
+  <properties/>
+  <testcase name="of_shouldRoundHalfUpCorrectly()" classname="com.wex.purchasetransaction.unit.domain.entity.MoneyTest" time="0.001"/>
+  <testcase name="multiply_shouldProduceCorrectResultForTypicalYenConversion()" classname="com.wex.purchasetransaction.unit.domain.entity.MoneyTest" time="0.001"/>
+  <testcase name="multiply_shouldHandleExchangeRateOfOne()" classname="com.wex.purchasetransaction.unit.domain.entity.MoneyTest" time="0.001"/>
+  <testcase name="multiply_shouldReturnCorrectConvertedAmount()" classname="com.wex.purchasetransaction.unit.domain.entity.MoneyTest" time="0.001"/>
+  <testcase name="multiply_shouldRoundDownWhenBelowHalfway()" classname="com.wex.purchasetransaction.unit.domain.entity.MoneyTest" time="0.001"/>
+  <testcase name="multiply_shouldHandleLargeAmount()" classname="com.wex.purchasetransaction.unit.domain.entity.MoneyTest" time="0.001"/>
+  <testcase name="multiply_shouldHandleExchangeRateWithManyDecimals()" classname="com.wex.purchasetransaction.unit.domain.entity.MoneyTest" time="0.001"/>
+  <testcase name="multiply_shouldHandleHighInflationRate()" classname="com.wex.purchasetransaction.unit.domain.entity.MoneyTest" time="0.001"/>
+  <testcase name="of_shouldFailWhenAmountBelowMinimumAfterRounding()" classname="com.wex.purchasetransaction.unit.domain.entity.MoneyTest" time="0.001"/>
+  <testcase name="multiply_shouldHandleVerySmallExchangeRate()" classname="com.wex.purchasetransaction.unit.domain.entity.MoneyTest" time="0.0"/>
+  <testcase name="multiply_shouldRoundConvertedAmountHalfUp()" classname="com.wex.purchasetransaction.unit.domain.entity.MoneyTest" time="0.0"/>
+  <testcase name="multiply_shouldProduceCorrectResultForTypicalEuroConversion()" classname="com.wex.purchasetransaction.unit.domain.entity.MoneyTest" time="0.001"/>
+  <testcase name="multiply_shouldRoundCorrectlyAtHalfwayPoint()" classname="com.wex.purchasetransaction.unit.domain.entity.MoneyTest" time="0.001"/>
+  <testcase name="multiply_shouldProduceCorrectResultForTypicalBrazilConversion()" classname="com.wex.purchasetransaction.unit.domain.entity.MoneyTest" time="0.0"/>
+  <testcase name="of_shouldAcceptMinimumValidAmount()" classname="com.wex.purchasetransaction.unit.domain.entity.MoneyTest" time="0.001"/>
+  <testcase name="multiply_shouldHandleVerySmallAmountWithHighRate()" classname="com.wex.purchasetransaction.unit.domain.entity.MoneyTest" time="0.001"/>
+  <testcase name="multiply_shouldFailWhenFactorIsNull()" classname="com.wex.purchasetransaction.unit.domain.entity.MoneyTest" time="0.001"/>
+  <testcase name="of_shouldHandleVeryLargePrecision()" classname="com.wex.purchasetransaction.unit.domain.entity.MoneyTest" time="0.0"/>
+  <testcase name="of_shouldFailWhenAmountIsNull()" classname="com.wex.purchasetransaction.unit.domain.entity.MoneyTest" time="0.001"/>
+  <testcase name="of_shouldFailWhenAmountIsZero()" classname="com.wex.purchasetransaction.unit.domain.entity.MoneyTest" time="0.001"/>
+  <testcase name="of_shouldRoundToTwoDecimalPlaces()" classname="com.wex.purchasetransaction.unit.domain.entity.MoneyTest" time="0.001"/>
+  <testcase name="of_shouldRoundDownWhenBelowHalfway()" classname="com.wex.purchasetransaction.unit.domain.entity.MoneyTest" time="0.001"/>
+  <testcase name="of_shouldFailWhenAmountIsNegative()" classname="com.wex.purchasetransaction.unit.domain.entity.MoneyTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

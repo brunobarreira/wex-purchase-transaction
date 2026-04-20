@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TreasuryApiClient.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">wex-purchase-transaction</a> &gt; <a href="index.source.html" class="el_package">com.wex.purchasetransaction.infrastructure.external.treasury</a> &gt; <span class="el_source">TreasuryApiClient.java</span></div><h1>TreasuryApiClient.java</h1><pre class="source lang-java linenums">package com.wex.purchasetransaction.infrastructure.external.treasury;
+
+import com.wex.purchasetransaction.application.port.out.ExchangeRatePort;
+import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
+import reactor.core.publisher.Mono;
+
+<span class="fc" id="L19">@Slf4j</span>
+@Component
+@RequiredArgsConstructor
+public class TreasuryApiClient implements ExchangeRatePort {
+
+    private static final int LOOKBACK_MONTHS = 6;
+    private static final String FIELDS = &quot;country_currency_desc,exchange_rate,record_date&quot;;
+
+    private final WebClient treasuryWebClient;
+
+    @Override
+    @Cacheable(value = &quot;exchangeRates&quot;, key = &quot;#treasuryCurrencyName + '_' + #purchaseDate&quot;)
+    public Optional&lt;ExchangeRateResult&gt; findRate(String treasuryCurrencyName, LocalDate purchaseDate) {
+<span class="fc" id="L32">        LocalDate sixMonthsAgo = purchaseDate.minusMonths(LOOKBACK_MONTHS);</span>
+<span class="fc" id="L33">        String filter = buildFilter(treasuryCurrencyName, sixMonthsAgo, purchaseDate);</span>
+
+<span class="fc" id="L35">        TreasuryApiResponse response = treasuryWebClient.get()</span>
+<span class="fc" id="L36">                .uri(uriBuilder -&gt; {</span>
+<span class="fc" id="L37">                    var uri = uriBuilder</span>
+<span class="fc" id="L38">                            .queryParam(&quot;fields&quot;, FIELDS)</span>
+<span class="fc" id="L39">                            .queryParam(&quot;filter&quot;, filter)</span>
+<span class="fc" id="L40">                            .queryParam(&quot;sort&quot;, &quot;-record_date&quot;)</span>
+<span class="fc" id="L41">                            .queryParam(&quot;page[size]&quot;, &quot;1&quot;)</span>
+<span class="fc" id="L42">                            .build();</span>
+<span class="fc" id="L43">                    log.info(&quot;Treasury API --&gt; GET {}&quot;, uri);</span>
+<span class="fc" id="L44">                    return uri;</span>
+                })
+<span class="fc" id="L46">                .retrieve()</span>
+<span class="fc" id="L47">                .onStatus(HttpStatus.NOT_FOUND::equals, clientResponse -&gt; {</span>
+<span class="fc" id="L48">                    log.warn(&quot;Treasury API &lt;-- 404 NOT_FOUND (no data) filter='{}'&quot;, filter);</span>
+<span class="fc" id="L49">                    return clientResponse.releaseBody().then(Mono.error(</span>
+                            new NoExchangeRateFoundException(&quot;No exchange rate data for: &quot; + filter)));
+                })
+<span class="fc" id="L52">                .onStatus(HttpStatusCode::isError, clientResponse -&gt;</span>
+<span class="fc" id="L53">                        clientResponse.bodyToMono(String.class)</span>
+<span class="fc" id="L54">                                .flatMap(body -&gt; {</span>
+<span class="fc" id="L55">                                    log.error(&quot;Treasury API &lt;-- {} body: {}&quot;,</span>
+<span class="fc" id="L56">                                            clientResponse.statusCode(), body);</span>
+<span class="fc" id="L57">                                    return Mono.error(WebClientResponseException.create(</span>
+<span class="fc" id="L58">                                            clientResponse.statusCode().value(),</span>
+<span class="fc" id="L59">                                            clientResponse.statusCode().toString(),</span>
+<span class="fc" id="L60">                                            clientResponse.headers().asHttpHeaders(),</span>
+<span class="fc" id="L61">                                            body.getBytes(StandardCharsets.UTF_8),</span>
+                                            StandardCharsets.UTF_8));
+                                })
+                )
+<span class="fc" id="L65">                .bodyToMono(TreasuryApiResponse.class)</span>
+<span class="fc" id="L66">                .doOnNext(r -&gt; log.info(&quot;Treasury API &lt;-- 200 OK body: {}&quot;, r))</span>
+<span class="fc" id="L67">                .onErrorResume(NoExchangeRateFoundException.class, e -&gt; Mono.empty())</span>
+<span class="fc" id="L68">                .block();</span>
+
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        if (response == null) {</span>
+<span class="fc" id="L71">            return Optional.empty();</span>
+        }
+
+<span class="fc" id="L74">        List&lt;TreasuryApiResponse.ExchangeRateData&gt; data = response.data();</span>
+<span class="pc bpc" id="L75" title="1 of 4 branches missed.">        if (data == null || data.isEmpty()) {</span>
+<span class="fc" id="L76">            return Optional.empty();</span>
+        }
+
+<span class="fc" id="L79">        TreasuryApiResponse.ExchangeRateData first = data.get(0);</span>
+
+<span class="fc bfc" id="L81" title="All 4 branches covered.">        if (first.exchangeRate() == null || first.exchangeRate().compareTo(BigDecimal.ZERO) &lt;= 0) {</span>
+<span class="fc" id="L82">            log.warn(&quot;Treasury API returned invalid exchange rate '{}' for filter: '{}'&quot;,</span>
+<span class="fc" id="L83">                    first.exchangeRate(), filter);</span>
+<span class="fc" id="L84">            return Optional.empty();</span>
+        }
+
+<span class="fc" id="L87">        String currencyName = extractCurrencyName(first.countryCurrentDesc());</span>
+<span class="fc" id="L88">        return Optional.of(new ExchangeRateResult(first.exchangeRate(), first.recordDate(), currencyName));</span>
+    }
+
+    private String buildFilter(String countryCurrentDesc, LocalDate from, LocalDate to) {
+<span class="fc" id="L92">        return String.format(</span>
+                &quot;country_currency_desc:eq:%s,record_date:gte:%s,record_date:lte:%s&quot;,
+                countryCurrentDesc, from, to);
+    }
+
+    private String extractCurrencyName(String countryCurrentDesc) {
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">        if (countryCurrentDesc == null) {</span>
+<span class="nc" id="L99">            return &quot;&quot;;</span>
+        }
+<span class="fc" id="L101">        int dashIndex = countryCurrentDesc.indexOf('-');</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">        return dashIndex &gt;= 0 ? countryCurrentDesc.substring(dashIndex + 1) : countryCurrentDesc;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

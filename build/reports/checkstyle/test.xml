@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="10.18.1">
+<file name="/Users/bruno/study/wex/wex-purchase-transaction/src/test/java/com/wex/purchasetransaction/unit/application/service/RetrievePurchaseTransactionServiceTest.java">
+</file>
+<file name="/Users/bruno/study/wex/wex-purchase-transaction/src/test/java/com/wex/purchasetransaction/unit/application/service/StorePurchaseTransactionServiceTest.java">
+</file>
+<file name="/Users/bruno/study/wex/wex-purchase-transaction/src/test/java/com/wex/purchasetransaction/unit/domain/entity/MoneyTest.java">
+</file>
+<file name="/Users/bruno/study/wex/wex-purchase-transaction/src/test/java/com/wex/purchasetransaction/unit/domain/entity/PurchaseTransactionTest.java">
+</file>
+<file name="/Users/bruno/study/wex/wex-purchase-transaction/src/test/java/com/wex/purchasetransaction/unit/presentation/controller/PurchaseTransactionControllerTest.java">
+</file>
+<file name="/Users/bruno/study/wex/wex-purchase-transaction/src/test/java/com/wex/purchasetransaction/integration/persistence/PurchaseTransactionRepositoryAdapterIT.java">
+</file>
+<file name="/Users/bruno/study/wex/wex-purchase-transaction/src/test/java/com/wex/purchasetransaction/integration/external/TreasuryApiClientIT.java">
+</file>
+<file name="/Users/bruno/study/wex/wex-purchase-transaction/src/test/java/com/wex/purchasetransaction/e2e/PurchaseTransactionE2ETest.java">
+</file>
+<file name="/Users/bruno/study/wex/wex-purchase-transaction/src/test/java/com/wex/purchasetransaction/e2e/PurchaseTransactionEdgeCasesE2ETest.java">
+</file>
+</checkstyle>

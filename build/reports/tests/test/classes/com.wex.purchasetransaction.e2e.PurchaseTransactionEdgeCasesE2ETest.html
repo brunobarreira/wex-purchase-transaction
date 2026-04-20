@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - PurchaseTransactionEdgeCasesE2ETest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>PurchaseTransactionEdgeCasesE2ETest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.wex.purchasetransaction.e2e.html">com.wex.purchasetransaction.e2e</a> &gt; PurchaseTransactionEdgeCasesE2ETest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">11</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.661s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">shouldConvertWithRateExactly6MonthsBeforePurchaseDate()</td>
+<td class="success">0.082s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">shouldConvertWithRateExactlyOnPurchaseDate()</td>
+<td class="success">0.064s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">shouldHandleHighPrecisionExchangeRate()</td>
+<td class="success">0.073s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">shouldNormalizeCurrencyCodeToUppercase()</td>
+<td class="success">0.106s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">shouldReturn400WhenAmountIsMissing()</td>
+<td class="success">0.030s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">shouldReturn400WhenAmountIsNegative()</td>
+<td class="success">0.023s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">shouldReturn400WhenCurrencyParameterIsMissing()</td>
+<td class="success">0.041s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">shouldReturn400WhenDescriptionIsMissing()</td>
+<td class="success">0.022s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">shouldReturn400WhenIdIsNotValidUuid()</td>
+<td class="success">0.020s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">shouldStoreTransactionWithMinimumAmount()</td>
+<td class="success">0.039s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">shouldStoreTransactionWithSpecialCharactersInDescription()</td>
+<td class="success">0.161s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>2026-04-20T12:26:57.195-03:00  INFO 6997 --- [wex-purchase-transaction] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.wex.purchasetransaction.e2e.PurchaseTransactionEdgeCasesE2ETest]: PurchaseTransactionEdgeCasesE2ETest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-04-20T12:26:57.198-03:00  INFO 6997 --- [wex-purchase-transaction] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.wex.purchasetransaction.PurchaseTransactionApplication for test class com.wex.purchasetransaction.e2e.PurchaseTransactionEdgeCasesE2ETest
+2026-04-20T12:26:57.381-03:00  INFO 6997 --- [wex-purchase-transaction] [o-auto-1-exec-4] c.w.p.i.e.treasury.TreasuryApiClient     : Treasury API --&gt; GET http://localhost:8089?fields=country_currency_desc,exchange_rate,record_date&amp;filter=country_currency_desc:eq:Brazil-Real,record_date:gte:2023-09-15,record_date:lte:2024-03-15&amp;sort=-record_date&amp;page%5Bsize%5D=1
+2026-04-20T12:26:57.381-03:00 DEBUG 6997 --- [wex-purchase-transaction] [o-auto-1-exec-4] c.w.p.i.config.WebClientConfig           : Treasury API (filter) --&gt; GET http://localhost:8089?fields=country_currency_desc,exchange_rate,record_date&amp;filter=country_currency_desc:eq:Brazil-Real,record_date:gte:2023-09-15,record_date:lte:2024-03-15&amp;sort=-record_date&amp;page%5Bsize%5D=1
+2026-04-20T12:26:57.395-03:00 DEBUG 6997 --- [wex-purchase-transaction] [ctor-http-nio-3] c.w.p.i.config.WebClientConfig           : Treasury API (filter) &lt;-- 200 OK
+2026-04-20T12:26:57.396-03:00  INFO 6997 --- [wex-purchase-transaction] [ctor-http-nio-3] c.w.p.i.e.treasury.TreasuryApiClient     : Treasury API &lt;-- 200 OK body: TreasuryApiResponse[data=[ExchangeRateData[countryCurrentDesc=Brazil-Real, exchangeRate=5.123456789, recordDate=2024-03-01]]]
+2026-04-20T12:26:57.552-03:00  INFO 6997 --- [wex-purchase-transaction] [-auto-1-exec-10] c.w.p.i.e.treasury.TreasuryApiClient     : Treasury API --&gt; GET http://localhost:8089?fields=country_currency_desc,exchange_rate,record_date&amp;filter=country_currency_desc:eq:Brazil-Real,record_date:gte:2023-09-15,record_date:lte:2024-03-15&amp;sort=-record_date&amp;page%5Bsize%5D=1
+2026-04-20T12:26:57.552-03:00 DEBUG 6997 --- [wex-purchase-transaction] [-auto-1-exec-10] c.w.p.i.config.WebClientConfig           : Treasury API (filter) --&gt; GET http://localhost:8089?fields=country_currency_desc,exchange_rate,record_date&amp;filter=country_currency_desc:eq:Brazil-Real,record_date:gte:2023-09-15,record_date:lte:2024-03-15&amp;sort=-record_date&amp;page%5Bsize%5D=1
+2026-04-20T12:26:57.559-03:00 DEBUG 6997 --- [wex-purchase-transaction] [ctor-http-nio-3] c.w.p.i.config.WebClientConfig           : Treasury API (filter) &lt;-- 200 OK
+2026-04-20T12:26:57.561-03:00  INFO 6997 --- [wex-purchase-transaction] [ctor-http-nio-3] c.w.p.i.e.treasury.TreasuryApiClient     : Treasury API &lt;-- 200 OK body: TreasuryApiResponse[data=[ExchangeRateData[countryCurrentDesc=Brazil-Real, exchangeRate=5.00, recordDate=2024-03-01]]]
+2026-04-20T12:26:57.637-03:00  INFO 6997 --- [wex-purchase-transaction] [o-auto-1-exec-2] c.w.p.i.e.treasury.TreasuryApiClient     : Treasury API --&gt; GET http://localhost:8089?fields=country_currency_desc,exchange_rate,record_date&amp;filter=country_currency_desc:eq:Brazil-Real,record_date:gte:2024-03-15,record_date:lte:2024-09-15&amp;sort=-record_date&amp;page%5Bsize%5D=1
+2026-04-20T12:26:57.637-03:00 DEBUG 6997 --- [wex-purchase-transaction] [o-auto-1-exec-2] c.w.p.i.config.WebClientConfig           : Treasury API (filter) --&gt; GET http://localhost:8089?fields=country_currency_desc,exchange_rate,record_date&amp;filter=country_currency_desc:eq:Brazil-Real,record_date:gte:2024-03-15,record_date:lte:2024-09-15&amp;sort=-record_date&amp;page%5Bsize%5D=1
+2026-04-20T12:26:57.643-03:00 DEBUG 6997 --- [wex-purchase-transaction] [ctor-http-nio-3] c.w.p.i.config.WebClientConfig           : Treasury API (filter) &lt;-- 200 OK
+2026-04-20T12:26:57.644-03:00  INFO 6997 --- [wex-purchase-transaction] [ctor-http-nio-3] c.w.p.i.e.treasury.TreasuryApiClient     : Treasury API &lt;-- 200 OK body: TreasuryApiResponse[data=[ExchangeRateData[countryCurrentDesc=Brazil-Real, exchangeRate=5.10, recordDate=2024-03-15]]]
+2026-04-20T12:26:57.868-03:00  INFO 6997 --- [wex-purchase-transaction] [o-auto-1-exec-8] c.w.p.i.e.treasury.TreasuryApiClient     : Treasury API --&gt; GET http://localhost:8089?fields=country_currency_desc,exchange_rate,record_date&amp;filter=country_currency_desc:eq:Brazil-Real,record_date:gte:2023-09-15,record_date:lte:2024-03-15&amp;sort=-record_date&amp;page%5Bsize%5D=1
+2026-04-20T12:26:57.868-03:00 DEBUG 6997 --- [wex-purchase-transaction] [o-auto-1-exec-8] c.w.p.i.config.WebClientConfig           : Treasury API (filter) --&gt; GET http://localhost:8089?fields=country_currency_desc,exchange_rate,record_date&amp;filter=country_currency_desc:eq:Brazil-Real,record_date:gte:2023-09-15,record_date:lte:2024-03-15&amp;sort=-record_date&amp;page%5Bsize%5D=1
+2026-04-20T12:26:57.873-03:00 DEBUG 6997 --- [wex-purchase-transaction] [ctor-http-nio-3] c.w.p.i.config.WebClientConfig           : Treasury API (filter) &lt;-- 200 OK
+2026-04-20T12:26:57.875-03:00  INFO 6997 --- [wex-purchase-transaction] [ctor-http-nio-3] c.w.p.i.e.treasury.TreasuryApiClient     : Treasury API &lt;-- 200 OK body: TreasuryApiResponse[data=[ExchangeRateData[countryCurrentDesc=Brazil-Real, exchangeRate=4.85, recordDate=2024-03-15]]]
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 8.10.2</a> at Apr 20, 2026, 12:27:17 PM</p>
+</div>
+</div>
+</body>
+</html>

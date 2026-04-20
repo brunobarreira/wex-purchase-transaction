@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.wex.purchasetransaction.unit.presentation.controller.PurchaseTransactionControllerTest" tests="23" skipped="0" failures="0" errors="0" timestamp="2026-04-20T15:27:16" hostname="Marcuss-MBP" time="0.482">
+  <properties/>
+  <testcase name="retrieve_shouldReturn400WhenCurrencyUnsupported()" classname="com.wex.purchasetransaction.unit.presentation.controller.PurchaseTransactionControllerTest" time="0.064"/>
+  <testcase name="store_shouldReturn400WhenAmountIsZero()" classname="com.wex.purchasetransaction.unit.presentation.controller.PurchaseTransactionControllerTest" time="0.041"/>
+  <testcase name="store_shouldReturn400WhenContentTypeIsNotJson()" classname="com.wex.purchasetransaction.unit.presentation.controller.PurchaseTransactionControllerTest" time="0.01"/>
+  <testcase name="retrieve_shouldReturn400WhenIdIsEmpty()" classname="com.wex.purchasetransaction.unit.presentation.controller.PurchaseTransactionControllerTest" time="0.011"/>
+  <testcase name="store_shouldReturn400WhenTransactionDateIsInvalidFormat()" classname="com.wex.purchasetransaction.unit.presentation.controller.PurchaseTransactionControllerTest" time="0.011"/>
+  <testcase name="store_shouldReturn400WhenBodyIsMalformedJson()" classname="com.wex.purchasetransaction.unit.presentation.controller.PurchaseTransactionControllerTest" time="0.008"/>
+  <testcase name="retrieve_shouldReturn404WhenTransactionNotFound()" classname="com.wex.purchasetransaction.unit.presentation.controller.PurchaseTransactionControllerTest" time="0.008"/>
+  <testcase name="store_shouldReturn400WhenAmountIsNegative()" classname="com.wex.purchasetransaction.unit.presentation.controller.PurchaseTransactionControllerTest" time="0.008"/>
+  <testcase name="retrieve_shouldReturn400WhenIdIsNotValidUuid()" classname="com.wex.purchasetransaction.unit.presentation.controller.PurchaseTransactionControllerTest" time="0.007"/>
+  <testcase name="retrieve_shouldReturn400WhenCurrencyParameterIsMissing()" classname="com.wex.purchasetransaction.unit.presentation.controller.PurchaseTransactionControllerTest" time="0.006"/>
+  <testcase name="store_shouldAcceptDescriptionWithSpecialCharacters()" classname="com.wex.purchasetransaction.unit.presentation.controller.PurchaseTransactionControllerTest" time="0.187"/>
+  <testcase name="retrieve_shouldNormalizeCurrencyCodeToUppercase()" classname="com.wex.purchasetransaction.unit.presentation.controller.PurchaseTransactionControllerTest" time="0.011"/>
+  <testcase name="retrieve_shouldReturn200WithConvertedAmount()" classname="com.wex.purchasetransaction.unit.presentation.controller.PurchaseTransactionControllerTest" time="0.005"/>
+  <testcase name="store_shouldReturn400WhenDescriptionExceeds50Chars()" classname="com.wex.purchasetransaction.unit.presentation.controller.PurchaseTransactionControllerTest" time="0.011"/>
+  <testcase name="store_shouldReturn400WhenAmountBelowMinimum()" classname="com.wex.purchasetransaction.unit.presentation.controller.PurchaseTransactionControllerTest" time="0.005"/>
+  <testcase name="store_shouldReturn400WhenTransactionDateIsInFuture()" classname="com.wex.purchasetransaction.unit.presentation.controller.PurchaseTransactionControllerTest" time="0.005"/>
+  <testcase name="store_shouldReturn400WhenTransactionDateIsMissing()" classname="com.wex.purchasetransaction.unit.presentation.controller.PurchaseTransactionControllerTest" time="0.006"/>
+  <testcase name="store_shouldReturn201WhenValidRequest()" classname="com.wex.purchasetransaction.unit.presentation.controller.PurchaseTransactionControllerTest" time="0.008"/>
+  <testcase name="store_shouldReturn400WhenDescriptionIsBlank()" classname="com.wex.purchasetransaction.unit.presentation.controller.PurchaseTransactionControllerTest" time="0.005"/>
+  <testcase name="store_shouldAcceptTransactionDateAsToday()" classname="com.wex.purchasetransaction.unit.presentation.controller.PurchaseTransactionControllerTest" time="0.005"/>
+  <testcase name="store_shouldReturn400WhenBodyIsEmpty()" classname="com.wex.purchasetransaction.unit.presentation.controller.PurchaseTransactionControllerTest" time="0.004"/>
+  <testcase name="retrieve_shouldReturn422WhenNoRateAvailable()" classname="com.wex.purchasetransaction.unit.presentation.controller.PurchaseTransactionControllerTest" time="0.005"/>
+  <testcase name="store_shouldAcceptMinimumValidAmount()" classname="com.wex.purchasetransaction.unit.presentation.controller.PurchaseTransactionControllerTest" time="0.006"/>
+  <system-out><![CDATA[2026-04-20T12:27:15.577-03:00  INFO 6997 --- [wex-purchase-transaction] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.wex.purchasetransaction.unit.presentation.controller.PurchaseTransactionControllerTest]: PurchaseTransactionControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-04-20T12:27:15.629-03:00  INFO 6997 --- [wex-purchase-transaction] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.wex.purchasetransaction.PurchaseTransactionApplication for test class com.wex.purchasetransaction.unit.presentation.controller.PurchaseTransactionControllerTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.4)
+
+2026-04-20T12:27:15.752-03:00  INFO 6997 --- [wex-purchase-transaction] [    Test worker] .u.p.c.PurchaseTransactionControllerTest : Starting PurchaseTransactionControllerTest using Java 21.0.9 with PID 6997 (started by bruno in /Users/bruno/study/wex/wex-purchase-transaction)
+2026-04-20T12:27:15.753-03:00  INFO 6997 --- [wex-purchase-transaction] [    Test worker] .u.p.c.PurchaseTransactionControllerTest : No active profile set, falling back to 1 default profile: "default"
+2026-04-20T12:27:16.413-03:00  INFO 6997 --- [wex-purchase-transaction] [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-04-20T12:27:16.414-03:00  INFO 6997 --- [wex-purchase-transaction] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-04-20T12:27:16.415-03:00  INFO 6997 --- [wex-purchase-transaction] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2026-04-20T12:27:16.475-03:00  INFO 6997 --- [wex-purchase-transaction] [    Test worker] .u.p.c.PurchaseTransactionControllerTest : Started PurchaseTransactionControllerTest in 0.822 seconds (process running for 40.683)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,5 @@
+logging:
+  level:
+    com.wex: DEBUG
+    org.springframework.web.reactive.function.client: DEBUG
+    reactor.netty.http.client: DEBUG

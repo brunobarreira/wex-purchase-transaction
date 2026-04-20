@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PurchaseTransactionController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">wex-purchase-transaction</a> &gt; <a href="index.source.html" class="el_package">com.wex.purchasetransaction.presentation.controller</a> &gt; <span class="el_source">PurchaseTransactionController.java</span></div><h1>PurchaseTransactionController.java</h1><pre class="source lang-java linenums">package com.wex.purchasetransaction.presentation.controller;
+
+import com.wex.purchasetransaction.application.dto.ConvertedPurchaseTransactionResult;
+import com.wex.purchasetransaction.application.dto.PurchaseTransactionResult;
+import com.wex.purchasetransaction.application.dto.StorePurchaseTransactionCommand;
+import com.wex.purchasetransaction.application.port.in.RetrievePurchaseTransactionUseCase;
+import com.wex.purchasetransaction.application.port.in.StorePurchaseTransactionUseCase;
+import com.wex.purchasetransaction.presentation.dto.request.StorePurchaseTransactionRequest;
+import com.wex.purchasetransaction.presentation.dto.response.ConvertedPurchaseTransactionResponse;
+import com.wex.purchasetransaction.presentation.dto.response.PurchaseTransactionResponse;
+import com.wex.purchasetransaction.presentation.mapper.PurchaseTransactionMapper;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import java.net.URI;
+import java.util.UUID;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+@RestController
+@RequestMapping(&quot;/api/v1/transactions&quot;)
+@RequiredArgsConstructor
+@Tag(name = &quot;Purchase Transactions&quot;, description = &quot;Endpoints for storing and retrieving purchase transactions&quot;)
+public class PurchaseTransactionController {
+
+    private final StorePurchaseTransactionUseCase storePurchaseTransactionUseCase;
+    private final RetrievePurchaseTransactionUseCase retrievePurchaseTransactionUseCase;
+    private final PurchaseTransactionMapper mapper;
+
+    @Operation(summary = &quot;Store a purchase transaction&quot;,
+            description = &quot;Persists a purchase transaction in USD and returns it with a unique identifier&quot;)
+    @ApiResponses({
+            @ApiResponse(responseCode = &quot;201&quot;, description = &quot;Transaction stored successfully&quot;,
+                    content = @Content(schema = @Schema(implementation = PurchaseTransactionResponse.class))),
+            @ApiResponse(responseCode = &quot;400&quot;, description = &quot;Invalid request payload&quot;, content = @Content)
+    })
+    @PostMapping
+    public ResponseEntity&lt;PurchaseTransactionResponse&gt; store(
+            @Valid @RequestBody StorePurchaseTransactionRequest request) {
+<span class="fc" id="L53">        StorePurchaseTransactionCommand command = mapper.toCommand(request);</span>
+<span class="fc" id="L54">        PurchaseTransactionResult result = storePurchaseTransactionUseCase.store(command);</span>
+<span class="fc" id="L55">        PurchaseTransactionResponse response = mapper.toResponse(result);</span>
+<span class="fc" id="L56">        URI location = ServletUriComponentsBuilder.fromCurrentRequest()</span>
+<span class="fc" id="L57">                .path(&quot;/{id}&quot;)</span>
+<span class="fc" id="L58">                .buildAndExpand(result.id())</span>
+<span class="fc" id="L59">                .toUri();</span>
+<span class="fc" id="L60">        return ResponseEntity.created(location).body(response);</span>
+    }
+
+    @Operation(summary = &quot;Retrieve a purchase transaction with currency conversion&quot;,
+            description = &quot;Returns the stored transaction with the amount converted to the target currency &quot;
+                    + &quot;using the US Treasury exchange rate active at the time of the purchase. &quot;
+                    + &quot;Rate must be available within 6 months prior to the transaction date.&quot;)
+    @ApiResponses({
+            @ApiResponse(responseCode = &quot;200&quot;, description = &quot;Transaction retrieved and converted&quot;,
+                    content = @Content(schema = @Schema(implementation = ConvertedPurchaseTransactionResponse.class))),
+            @ApiResponse(responseCode = &quot;400&quot;, description = &quot;Unsupported currency code&quot;, content = @Content),
+            @ApiResponse(responseCode = &quot;404&quot;, description = &quot;Transaction not found&quot;, content = @Content),
+            @ApiResponse(responseCode = &quot;422&quot;, description = &quot;Exchange rate unavailable within 6 months&quot;,
+                    content = @Content)
+    })
+    @GetMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;ConvertedPurchaseTransactionResponse&gt; retrieve(
+            @Parameter(description = &quot;Transaction unique identifier&quot;) @PathVariable UUID id,
+            @Parameter(description = &quot;ISO 4217 currency code (e.g. BRL, EUR, JPY)&quot;, required = true)
+            @RequestParam String currency) {
+<span class="fc" id="L80">        ConvertedPurchaseTransactionResult result = retrievePurchaseTransactionUseCase.retrieve(id, currency);</span>
+<span class="fc" id="L81">        return ResponseEntity.ok(mapper.toConvertedResponse(result));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hexagonal Architecture Decision - WEX Purchase Transaction API</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: #fff;
+        }
+        h1 {
+            color: #1a365d;
+            border-bottom: 3px solid #3182ce;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+        }
+        h2 {
+            color: #2c5282;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e2e8f0;
+            font-size: 1.6em;
+        }
+        h3 {
+            color: #2d3748;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        h4 {
+            color: #4a5568;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        pre {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 0.85em;
+            margin: 20px 0;
+            line-height: 1.5;
+        }
+        code {
+            background: #edf2f7;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #c53030;
+        }
+        pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95em;
+        }
+        th, td {
+            border: 1px solid #e2e8f0;
+            padding: 12px 15px;
+            text-align: left;
+        }
+        th {
+            background: #3182ce;
+            color: white;
+            font-weight: 600;
+        }
+        tr:nth-child(even) {
+            background: #f7fafc;
+        }
+        tr:hover {
+            background: #edf2f7;
+        }
+        .highlight {
+            background: #fefcbf;
+            padding: 15px 20px;
+            border-left: 4px solid #d69e2e;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .success {
+            background: #c6f6d5;
+            border-left-color: #38a169;
+        }
+        .info {
+            background: #bee3f8;
+            border-left-color: #3182ce;
+        }
+        ul, ol {
+            margin: 15px 0 15px 25px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        .diagram {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            white-space: pre;
+            overflow-x: auto;
+        }
+        .page-break {
+            page-break-before: always;
+        }
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+        .column {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-right: 5px;
+        }
+        .badge-green { background: #c6f6d5; color: #276749; }
+        .badge-red { background: #fed7d7; color: #c53030; }
+        .badge-yellow { background: #fefcbf; color: #975a16; }
+        .badge-blue { background: #bee3f8; color: #2b6cb0; }
+        blockquote {
+            background: #f7fafc;
+            border-left: 4px solid #3182ce;
+            padding: 15px 20px;
+            margin: 20px 0;
+            font-style: italic;
+            color: #4a5568;
+        }
+        @media print {
+            body { padding: 20px; }
+            pre { font-size: 0.75em; }
+            .page-break { page-break-before: always; }
+        }
+    </style>
+</head>
+<body>
+
+<h1>Hexagonal Architecture Decision Document</h1>
+<p style="color: #718096; font-size: 1.1em; margin-bottom: 30px;">
+    WEX Purchase Transaction API - Architecture Decision Record (ADR)
+</p>
+
+<h2>1. Executive Summary</h2>
+<div class="highlight info">
+    <strong>Key Decision:</strong> Hexagonal Architecture (Ports & Adapters) was chosen over traditional Layered Architecture to ensure complete isolation of business logic from external dependencies (database, Treasury API), enabling superior testability, maintainability, and flexibility.
+</div>
+
+<h2>2. Architecture Comparison</h2>
+
+<h3>2.1 Traditional Layered Architecture</h3>
+<div class="diagram">
+┌─────────────────────────────────────┐
+│           CONTROLLER                │  ← Depends on Service (concrete)
+│         (REST Endpoints)            │
+└──────────────┬──────────────────────┘
+               │ calls directly
+               ▼
+┌─────────────────────────────────────┐
+│            SERVICE                  │  ← Depends on Repository (Spring Data)
+│       (Business Logic)              │
+└──────────────┬──────────────────────┘
+               │ calls directly
+               ▼
+┌─────────────────────────────────────┐
+│          REPOSITORY                 │  ← Coupled to JPA/Database
+│      (Spring Data JPA)              │
+└─────────────────────────────────────┘
+</div>
+
+<p><strong>Problems with Layered Architecture:</strong></p>
+<ul>
+    <li>All dependencies point <strong>downward</strong> (toward infrastructure)</li>
+    <li>Service layer is <strong>tightly coupled</strong> to Spring Data JPA</li>
+    <li>Business logic is <strong>mixed</strong> with framework code</li>
+    <li>Difficult to test without database/Spring context</li>
+    <li>Changing database requires modifying Service layer</li>
+</ul>
+
+<h3>2.2 Hexagonal Architecture (Ports & Adapters)</h3>
+<div class="diagram">
+                    ┌─────────────────────────────────────┐
+                    │         DRIVING ADAPTERS            │
+                    │     (REST Controller, CLI, etc.)    │
+                    └──────────────┬──────────────────────┘
+                                   │ uses
+                                   ▼
+┌──────────────────────────────────────────────────────────────────────┐
+│                        APPLICATION CORE                               │
+│  ┌────────────────────────────────────────────────────────────────┐  │
+│  │                         DOMAIN                                  │  │
+│  │      PurchaseTransaction (Entity) | Money (Value Object)       │  │
+│  │              Business Rules & Validations                       │  │
+│  └────────────────────────────────────────────────────────────────┘  │
+│  ┌────────────────────────────────────────────────────────────────┐  │
+│  │                    APPLICATION SERVICES                         │  │
+│  │   StorePurchaseTransactionService | RetrievePurchaseTransaction │  │
+│  └────────────────────────────────────────────────────────────────┘  │
+│                              │                                        │
+│                    PORTS (Interfaces)                                 │
+│         PurchaseTransactionRepository | ExchangeRatePort             │
+└──────────────────────────────┬───────────────────────────────────────┘
+                               │ implemented by
+                               ▼
+                    ┌─────────────────────────────────────┐
+                    │        DRIVEN ADAPTERS              │
+                    │  RepositoryAdapter | TreasuryClient │
+                    └─────────────────────────────────────┘
+</div>
+
+<div class="highlight success">
+    <strong>Key Principle:</strong> Dependencies point <strong>INWARD</strong> (toward the domain). The domain has ZERO external dependencies.
+</div>
+
+<div class="page-break"></div>
+
+<h2>3. Why Hexagonal Architecture?</h2>
+
+<h3>3.1 Decision Drivers</h3>
+<table>
+    <tr>
+        <th>Driver</th>
+        <th>Weight</th>
+        <th>Hexagonal</th>
+        <th>Layered</th>
+    </tr>
+    <tr>
+        <td>Testability</td>
+        <td><span class="badge badge-red">High</span></td>
+        <td><span class="badge badge-green">Excellent</span></td>
+        <td><span class="badge badge-yellow">Requires Spring</span></td>
+    </tr>
+    <tr>
+        <td>Domain Isolation</td>
+        <td><span class="badge badge-red">High</span></td>
+        <td><span class="badge badge-green">Complete</span></td>
+        <td><span class="badge badge-red">Mixed with framework</span></td>
+    </tr>
+    <tr>
+        <td>External API Flexibility</td>
+        <td><span class="badge badge-red">High</span></td>
+        <td><span class="badge badge-green">Easy to swap</span></td>
+        <td><span class="badge badge-red">Requires refactoring</span></td>
+    </tr>
+    <tr>
+        <td>Database Independence</td>
+        <td><span class="badge badge-yellow">Medium</span></td>
+        <td><span class="badge badge-green">Change adapter only</span></td>
+        <td><span class="badge badge-red">Service layer changes</span></td>
+    </tr>
+    <tr>
+        <td>Learning Curve</td>
+        <td><span class="badge badge-blue">Low</span></td>
+        <td><span class="badge badge-yellow">Higher initially</span></td>
+        <td><span class="badge badge-green">Familiar pattern</span></td>
+    </tr>
+</table>
+
+<h3>3.2 Specific Project Requirements</h3>
+<ol>
+    <li><strong>Treasury API Integration:</strong> External API that may change or need mocking</li>
+    <li><strong>Multiple Database Support:</strong> H2 (dev) and PostgreSQL (prod)</li>
+    <li><strong>High Test Coverage:</strong> 80%+ coverage requirement</li>
+    <li><strong>Clean Code Assessment:</strong> Demonstrating architectural knowledge</li>
+</ol>
+
+<h2>4. Layer-by-Layer Explanation</h2>
+
+<h3>4.1 DOMAIN Layer (Innermost)</h3>
+<p><strong>Location:</strong> <code>com.wex.purchasetransaction.domain</code></p>
+
+<div class="diagram">
+domain/
+├── entity/
+│   └── PurchaseTransaction.java    ← Aggregate Root
+├── valueobject/
+│   └── Money.java                  ← Value Object
+├── repository/
+│   └── PurchaseTransactionRepository.java  ← Port (Interface)
+└── exception/
+    ├── TransactionNotFoundException.java
+    ├── UnsupportedCurrencyException.java
+    └── CurrencyConversionException.java
+</div>
+
+<p><strong>Key Characteristics:</strong></p>
+<ul>
+    <li><strong>ZERO framework dependencies</strong> (no Spring, no JPA)</li>
+    <li>Pure Java classes with business logic</li>
+    <li>Can be tested without any infrastructure</li>
+</ul>
+
+<h4>Example - Money Value Object:</h4>
+<pre><code>public record Money(BigDecimal value) {
+    public Money {
+        if (value == null) {
+            throw new IllegalArgumentException("Amount cannot be null");
+        }
+        // Enforce HALF_UP rounding to 2 decimal places
+        value = value.setScale(2, RoundingMode.HALF_UP);
+        if (value.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Amount must be positive");
+        }
+    }
+
+    public Money multiply(BigDecimal factor) {
+        return new Money(value.multiply(factor));
+    }
+}</code></pre>
+
+<div class="highlight">
+    <strong>Why This Matters:</strong> Rounding rules are centralized. Any code using <code>Money</code> automatically follows the rules. Business rule changes affect only this class.
+</div>
+
+<div class="page-break"></div>
+
+<h3>4.2 APPLICATION Layer</h3>
+<p><strong>Location:</strong> <code>com.wex.purchasetransaction.application</code></p>
+
+<div class="diagram">
+application/
+├── port/
+│   ├── in/                         ← Input Ports (Use Cases)
+│   │   ├── StorePurchaseTransactionUseCase.java
+│   │   └── RetrievePurchaseTransactionUseCase.java
+│   └── out/                        ← Output Ports
+│       └── ExchangeRatePort.java
+├── service/                        ← Use Case Implementations
+│   ├── StorePurchaseTransactionService.java
+│   └── RetrievePurchaseTransactionService.java
+└── dto/
+    ├── StorePurchaseTransactionCommand.java
+    └── PurchaseTransactionResult.java
+</code></pre>
+</div>
+
+<h4>Port Types:</h4>
+<table>
+    <tr>
+        <th>Port Type</th>
+        <th>Direction</th>
+        <th>Purpose</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>Input Port</td>
+        <td>Outside → Application</td>
+        <td>Define use cases</td>
+        <td><code>StorePurchaseTransactionUseCase</code></td>
+    </tr>
+    <tr>
+        <td>Output Port</td>
+        <td>Application → Outside</td>
+        <td>Define external dependencies</td>
+        <td><code>ExchangeRatePort</code></td>
+    </tr>
+</table>
+
+<h4>Example - Output Port (Strategy Pattern):</h4>
+<pre><code>public interface ExchangeRatePort {
+    Optional&lt;ExchangeRateResult&gt; findRate(String currencyName, LocalDate purchaseDate);
+
+    record ExchangeRateResult(
+        BigDecimal rate,
+        LocalDate recordDate,
+        String currencyName
+    ) {}
+}</code></pre>
+
+<div class="highlight info">
+    <strong>Strategy Pattern:</strong> The <code>ExchangeRatePort</code> interface allows swapping the Treasury API implementation without touching business logic.
+</div>
+
+<h3>4.3 INFRASTRUCTURE Layer</h3>
+<p><strong>Location:</strong> <code>com.wex.purchasetransaction.infrastructure</code></p>
+
+<div class="diagram">
+infrastructure/
+├── persistence/                    ← Database Adapter
+│   ├── PurchaseTransactionRepositoryAdapter.java
+│   ├── PurchaseTransactionJpaEntity.java
+│   └── PurchaseTransactionJpaRepository.java
+├── external/treasury/              ← External API Adapter
+│   ├── TreasuryApiClient.java
+│   ├── TreasuryApiResponse.java
+│   └── CurrencyMapper.java
+└── config/
+    ├── WebClientConfig.java
+    └── CacheConfig.java
+</div>
+
+<h4>Adapter Pattern - Database:</h4>
+<pre><code>@Repository
+public class PurchaseTransactionRepositoryAdapter
+        implements PurchaseTransactionRepository {  // Implements Domain Port
+
+    private final PurchaseTransactionJpaRepository jpaRepository;
+
+    @Override
+    public PurchaseTransaction save(PurchaseTransaction domain) {
+        PurchaseTransactionJpaEntity jpa = toJpaEntity(domain);
+        PurchaseTransactionJpaEntity saved = jpaRepository.save(jpa);
+        return toDomainEntity(saved);  // Maps back to domain
+    }
+}</code></pre>
+
+<div class="highlight">
+    <strong>Why Separate Entities:</strong> JPA annotations stay in infrastructure. Domain entity <code>PurchaseTransaction</code> has only business logic.
+</div>
+
+<div class="page-break"></div>
+
+<h3>4.4 PRESENTATION Layer</h3>
+<p><strong>Location:</strong> <code>com.wex.purchasetransaction.presentation</code></p>
+
+<pre><code>@RestController
+@RequestMapping("/api/v1/transactions")
+public class PurchaseTransactionController {
+
+    // Depends on USE CASE interfaces, not services directly
+    private final StorePurchaseTransactionUseCase storeUseCase;
+    private final RetrievePurchaseTransactionUseCase retrieveUseCase;
+
+    @PostMapping
+    public ResponseEntity&lt;PurchaseTransactionResponse&gt; store(
+            @Valid @RequestBody StorePurchaseTransactionRequest request) {
+
+        // 1. Map HTTP request to application command
+        var command = mapper.toCommand(request);
+
+        // 2. Execute use case
+        var result = storeUseCase.store(command);
+
+        // 3. Return HTTP response
+        return ResponseEntity.created(location).body(mapper.toResponse(result));
+    }
+}</code></pre>
+
+<div class="highlight success">
+    <strong>Key Point:</strong> Controller knows nothing about database or Treasury API. Only knows about use cases (business operations).
+</div>
+
+<h2>5. Benefits Over Layered Architecture</h2>
+
+<h3>5.1 Testability Comparison</h3>
+
+<div class="two-columns">
+    <div class="column">
+        <h4>Layered Architecture</h4>
+        <pre><code>@SpringBootTest  // Needs Spring
+@AutoConfigureTestDatabase
+class ServiceTest {
+    @Autowired
+    private TransactionService service;
+
+    @Test
+    void test() {
+        // SLOW - starts Spring
+        // BRITTLE - needs DB
+    }
+}</code></pre>
+    </div>
+    <div class="column">
+        <h4>Hexagonal Architecture</h4>
+        <pre><code>@ExtendWith(MockitoExtension.class)
+class ServiceTest {
+    @Mock
+    private PurchaseTransactionRepository repo;
+    @InjectMocks
+    private StorePurchaseTransactionService svc;
+
+    @Test
+    void test() {
+        // FAST - no Spring
+        // RELIABLE - mocked deps
+    }
+}</code></pre>
+    </div>
+</div>
+
+<h3>5.2 Flexibility Comparison</h3>
+<table>
+    <tr>
+        <th>Scenario</th>
+        <th>Layered Architecture</th>
+        <th>Hexagonal Architecture</th>
+    </tr>
+    <tr>
+        <td>Change H2 → PostgreSQL</td>
+        <td><span class="badge badge-red">Modify Service</span></td>
+        <td><span class="badge badge-green">Config only</span></td>
+    </tr>
+    <tr>
+        <td>Change JPA → MongoDB</td>
+        <td><span class="badge badge-red">Rewrite Service</span></td>
+        <td><span class="badge badge-green">New adapter</span></td>
+    </tr>
+    <tr>
+        <td>Mock Treasury API</td>
+        <td><span class="badge badge-yellow">Mock HTTP client</span></td>
+        <td><span class="badge badge-green">Mock interface</span></td>
+    </tr>
+    <tr>
+        <td>Add GraphQL endpoint</td>
+        <td><span class="badge badge-red">Modify/duplicate Service</span></td>
+        <td><span class="badge badge-green">New adapter</span></td>
+    </tr>
+</table>
+
+<div class="page-break"></div>
+
+<h2>6. Data Flow Diagram</h2>
+
+<h3>Retrieve with Currency Conversion</h3>
+<div class="diagram">
+HTTP Request: GET /transactions/{id}?currency=BRL
+     │
+     ▼
+┌─────────────────────────────────────────────────────────────┐
+│ PRESENTATION: PurchaseTransactionController.retrieve()      │
+│   - Extracts UUID id and currency code                      │
+└─────────────────────────────────────────────────────────────┘
+     │
+     ▼
+┌─────────────────────────────────────────────────────────────┐
+│ APPLICATION: RetrievePurchaseTransactionService.retrieve()  │
+│                                                             │
+│   1. CurrencyMapper.toTreasuryName("BRL") → "Brazil-Real"   │
+│   2. Repository.findById(id) → PurchaseTransaction          │
+│   3. ExchangeRatePort.findRate() → ExchangeRateResult       │
+│   4. Money.multiply(rate) → Converted amount                │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+     │                           │
+     │                           ▼
+     │         ┌─────────────────────────────────────────────┐
+     │         │ INFRASTRUCTURE: TreasuryApiClient           │
+     │         │   - Calls US Treasury API                   │
+     │         │   - Returns ExchangeRateResult              │
+     │         └─────────────────────────────────────────────┘
+     │
+     ▼
+┌─────────────────────────────────────────────────────────────┐
+│ PRESENTATION: Returns ConvertedPurchaseTransactionResponse  │
+│   - HTTP 200 OK                                             │
+└─────────────────────────────────────────────────────────────┘
+</div>
+
+<h2>7. Interview Talking Points</h2>
+
+<h3>Opening Statement</h3>
+<blockquote>
+    "I chose Hexagonal Architecture because this project integrates with an external API (US Treasury) and needs to support multiple databases. The architecture ensures our business logic is completely isolated from these external dependencies, making the code highly testable and maintainable."
+</blockquote>
+
+<h3>Key Points to Emphasize</h3>
+<ol>
+    <li><strong>Dependency Inversion:</strong> "Dependencies point inward. The domain knows nothing about Spring, JPA, or HTTP."</li>
+    <li><strong>Testability:</strong> "I can test all business logic with simple unit tests, no Spring context needed. This helped achieve 116 tests with 80%+ coverage."</li>
+    <li><strong>Flexibility:</strong> "Swapping H2 for PostgreSQL requires zero code changes in business logic - just configuration."</li>
+    <li><strong>Strategy Pattern:</strong> "The <code>ExchangeRatePort</code> interface means I could replace the Treasury API without touching the service layer."</li>
+    <li><strong>Value Objects:</strong> "The <code>Money</code> class encapsulates all currency rounding rules in one place."</li>
+</ol>
+
+<h3>Potential Questions & Answers</h3>
+
+<p><strong>Q: "Isn't this over-engineering for a simple CRUD API?"</strong></p>
+<p><strong>A:</strong> "While it adds initial structure, the benefits are clear: The Treasury API integration would be tightly coupled in layered architecture. Testing would require mocking HTTP clients instead of simple interfaces. The assessment requires demonstrating architectural knowledge, and this structure scales well as complexity grows."</p>
+
+<p><strong>Q: "Why separate JPA entities from domain entities?"</strong></p>
+<p><strong>A:</strong> "This prevents JPA annotations from polluting the domain. The domain entity has only business logic, while the JPA entity handles persistence concerns. This follows the Single Responsibility Principle."</p>
+
+<div class="page-break"></div>
+
+<h2>8. Summary</h2>
+
+<table>
+    <tr>
+        <th>Aspect</th>
+        <th>Layered Architecture</th>
+        <th>Hexagonal Architecture</th>
+    </tr>
+    <tr>
+        <td><strong>Dependency Direction</strong></td>
+        <td>Downward (to infrastructure)</td>
+        <td><span class="badge badge-green">Inward (to domain)</span></td>
+    </tr>
+    <tr>
+        <td><strong>Domain Purity</strong></td>
+        <td>Mixed with framework</td>
+        <td><span class="badge badge-green">Pure Java, no dependencies</span></td>
+    </tr>
+    <tr>
+        <td><strong>Testing Speed</strong></td>
+        <td>Slow (needs Spring)</td>
+        <td><span class="badge badge-green">Fast (plain unit tests)</span></td>
+    </tr>
+    <tr>
+        <td><strong>External API Changes</strong></td>
+        <td>Affects Service layer</td>
+        <td><span class="badge badge-green">Only affects adapter</span></td>
+    </tr>
+    <tr>
+        <td><strong>Database Changes</strong></td>
+        <td>Affects Service layer</td>
+        <td><span class="badge badge-green">Only affects adapter</span></td>
+    </tr>
+    <tr>
+        <td><strong>Long-term Maintainability</strong></td>
+        <td>Decreases over time</td>
+        <td><span class="badge badge-green">Remains consistent</span></td>
+    </tr>
+</table>
+
+<div class="highlight success">
+    <h3 style="margin-top: 0;">Conclusion</h3>
+    <p>Hexagonal Architecture was the right choice because:</p>
+    <ul>
+        <li><strong>External Integration:</strong> Treasury API isolated behind <code>ExchangeRatePort</code></li>
+        <li><strong>Multiple Databases:</strong> H2/PostgreSQL switching is configuration-only</li>
+        <li><strong>Testability:</strong> 116 tests with 80%+ coverage, most without Spring context</li>
+        <li><strong>Clean Code:</strong> Clear separation demonstrates architectural knowledge</li>
+        <li><strong>Future-Proof:</strong> Adding new features requires only new adapters</li>
+    </ul>
+</div>
+
+<hr style="margin-top: 40px;">
+<p style="text-align: center; color: #718096; font-size: 0.9em;">
+    Document prepared for WEX Technical Assessment - SDE3 (R21264)
+</p>
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.wex.purchasetransaction.unit.domain.entity.PurchaseTransactionTest" tests="20" skipped="0" failures="0" errors="0" timestamp="2026-04-20T15:27:15" hostname="Marcuss-MBP" time="0.033">
+  <properties/>
+  <testcase name="create_shouldAcceptTransactionDateAsToday()" classname="com.wex.purchasetransaction.unit.domain.entity.PurchaseTransactionTest" time="0.001"/>
+  <testcase name="reconstitute_shouldPreserveAllFields()" classname="com.wex.purchasetransaction.unit.domain.entity.PurchaseTransactionTest" time="0.0"/>
+  <testcase name="create_shouldCountUnicodeCharactersCorrectlyFor50CharLimit()" classname="com.wex.purchasetransaction.unit.domain.entity.PurchaseTransactionTest" time="0.001"/>
+  <testcase name="create_shouldAcceptTransactionDateOnFirstDayOfYear()" classname="com.wex.purchasetransaction.unit.domain.entity.PurchaseTransactionTest" time="0.0"/>
+  <testcase name="create_shouldPreserveLeadingAndTrailingSpacesInDescription()" classname="com.wex.purchasetransaction.unit.domain.entity.PurchaseTransactionTest" time="0.001"/>
+  <testcase name="create_shouldAcceptTransactionDateOnLeapYearDay()" classname="com.wex.purchasetransaction.unit.domain.entity.PurchaseTransactionTest" time="0.0"/>
+  <testcase name="create_shouldFailWhenDescriptionIsNull()" classname="com.wex.purchasetransaction.unit.domain.entity.PurchaseTransactionTest" time="0.001"/>
+  <testcase name="create_shouldGenerateUniqueId()" classname="com.wex.purchasetransaction.unit.domain.entity.PurchaseTransactionTest" time="0.001"/>
+  <testcase name="create_shouldAcceptDescriptionWithUnicodeCharacters()" classname="com.wex.purchasetransaction.unit.domain.entity.PurchaseTransactionTest" time="0.001"/>
+  <testcase name="create_shouldAcceptDescriptionWithSpecialCharacters()" classname="com.wex.purchasetransaction.unit.domain.entity.PurchaseTransactionTest" time="0.0"/>
+  <testcase name="create_shouldFailWhenDescriptionExceeds50Chars()" classname="com.wex.purchasetransaction.unit.domain.entity.PurchaseTransactionTest" time="0.001"/>
+  <testcase name="create_shouldAcceptDescriptionWith50UnicodeCharacters()" classname="com.wex.purchasetransaction.unit.domain.entity.PurchaseTransactionTest" time="0.001"/>
+  <testcase name="create_shouldFailWhenTransactionDateIsInFuture()" classname="com.wex.purchasetransaction.unit.domain.entity.PurchaseTransactionTest" time="0.001"/>
+  <testcase name="create_shouldAcceptDescriptionWithEmojis()" classname="com.wex.purchasetransaction.unit.domain.entity.PurchaseTransactionTest" time="0.001"/>
+  <testcase name="create_shouldFailWhenTransactionDateIsNull()" classname="com.wex.purchasetransaction.unit.domain.entity.PurchaseTransactionTest" time="0.001"/>
+  <testcase name="create_shouldFailWhenDescriptionIsBlank()" classname="com.wex.purchasetransaction.unit.domain.entity.PurchaseTransactionTest" time="0.002"/>
+  <testcase name="create_shouldAcceptDescriptionOf49Chars()" classname="com.wex.purchasetransaction.unit.domain.entity.PurchaseTransactionTest" time="0.001"/>
+  <testcase name="create_shouldAcceptDescriptionOfExactly50Chars()" classname="com.wex.purchasetransaction.unit.domain.entity.PurchaseTransactionTest" time="0.001"/>
+  <testcase name="create_shouldRoundAmountToNearestCent()" classname="com.wex.purchasetransaction.unit.domain.entity.PurchaseTransactionTest" time="0.001"/>
+  <testcase name="create_shouldAcceptTransactionDateOnYearBoundary()" classname="com.wex.purchasetransaction.unit.domain.entity.PurchaseTransactionTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,48 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: wexdb
+      DB_USERNAME: wex
+      DB_PASSWORD: wex
+    depends_on:
+      db:
+        condition: service_healthy
+    profiles:
+      - prod
+
+  db:
+    image: postgres:16-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: wexdb
+      POSTGRES_USER: wex
+      POSTGRES_PASSWORD: wex
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U wex -d wexdb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    profiles:
+      - prod
+
+  # Standalone mode (default): runs with H2 embedded, no db service needed
+  app-standalone:
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./data:/app/data
+
+volumes:
+  postgres_data:

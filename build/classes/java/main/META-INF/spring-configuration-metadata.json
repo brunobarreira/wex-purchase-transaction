@@ -1,0 +1,27 @@
+{
+  "groups": [
+    {
+      "name": "treasury.api",
+      "type": "com.wex.purchasetransaction.infrastructure.external.treasury.TreasuryApiProperties",
+      "sourceType": "com.wex.purchasetransaction.infrastructure.external.treasury.TreasuryApiProperties"
+    },
+    {
+      "name": "treasury.currency",
+      "type": "com.wex.purchasetransaction.infrastructure.external.treasury.CurrencyMappingProperties",
+      "sourceType": "com.wex.purchasetransaction.infrastructure.external.treasury.CurrencyMappingProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "treasury.api.base-url",
+      "type": "java.lang.String",
+      "sourceType": "com.wex.purchasetransaction.infrastructure.external.treasury.TreasuryApiProperties"
+    },
+    {
+      "name": "treasury.currency.mappings",
+      "type": "java.util.Map<java.lang.String,java.lang.String>",
+      "sourceType": "com.wex.purchasetransaction.infrastructure.external.treasury.CurrencyMappingProperties"
+    }
+  ],
+  "hints": []
+}

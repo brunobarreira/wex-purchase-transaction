@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GlobalExceptionHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">wex-purchase-transaction</a> &gt; <a href="index.source.html" class="el_package">com.wex.purchasetransaction.presentation.exception</a> &gt; <span class="el_source">GlobalExceptionHandler.java</span></div><h1>GlobalExceptionHandler.java</h1><pre class="source lang-java linenums">package com.wex.purchasetransaction.presentation.exception;
+
+import com.wex.purchasetransaction.domain.exception.CurrencyConversionException;
+import com.wex.purchasetransaction.domain.exception.TransactionNotFoundException;
+import com.wex.purchasetransaction.domain.exception.UnsupportedCurrencyException;
+import java.time.LocalDateTime;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.FieldError;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingPathVariableException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+
+<span class="fc" id="L23">@Slf4j</span>
+@RestControllerAdvice
+<span class="fc" id="L25">public class GlobalExceptionHandler {</span>
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity&lt;Map&lt;String, Object&gt;&gt; handleValidationException(
+            MethodArgumentNotValidException ex) {
+<span class="fc" id="L30">        List&lt;String&gt; errors = ex.getBindingResult().getFieldErrors().stream()</span>
+<span class="fc" id="L31">                .map(FieldError::getDefaultMessage)</span>
+<span class="fc" id="L32">                .toList();</span>
+<span class="fc" id="L33">        return buildResponse(HttpStatus.BAD_REQUEST, &quot;Validation failed&quot;, errors);</span>
+    }
+
+    @ExceptionHandler(TransactionNotFoundException.class)
+    public ResponseEntity&lt;Map&lt;String, Object&gt;&gt; handleTransactionNotFound(
+            TransactionNotFoundException ex) {
+<span class="fc" id="L39">        return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage(), List.of());</span>
+    }
+
+    @ExceptionHandler(UnsupportedCurrencyException.class)
+    public ResponseEntity&lt;Map&lt;String, Object&gt;&gt; handleUnsupportedCurrency(
+            UnsupportedCurrencyException ex) {
+<span class="fc" id="L45">        return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage(), List.of());</span>
+    }
+
+    @ExceptionHandler(CurrencyConversionException.class)
+    public ResponseEntity&lt;Map&lt;String, Object&gt;&gt; handleCurrencyConversion(
+            CurrencyConversionException ex) {
+<span class="fc" id="L51">        return buildResponse(HttpStatus.UNPROCESSABLE_ENTITY, ex.getMessage(), List.of());</span>
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity&lt;Map&lt;String, Object&gt;&gt; handleIllegalArgument(IllegalArgumentException ex) {
+<span class="nc" id="L56">        return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage(), List.of());</span>
+    }
+
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ResponseEntity&lt;Map&lt;String, Object&gt;&gt; handleMissingParameter(
+            MissingServletRequestParameterException ex) {
+<span class="fc" id="L62">        String message = String.format(&quot;Required parameter '%s' is missing&quot;, ex.getParameterName());</span>
+<span class="fc" id="L63">        return buildResponse(HttpStatus.BAD_REQUEST, message, List.of());</span>
+    }
+
+    @ExceptionHandler(MissingPathVariableException.class)
+    public ResponseEntity&lt;Map&lt;String, Object&gt;&gt; handleMissingPathVariable(
+            MissingPathVariableException ex) {
+<span class="fc" id="L69">        String message = String.format(&quot;Required path variable '%s' is missing or invalid&quot;,</span>
+<span class="fc" id="L70">                ex.getVariableName());</span>
+<span class="fc" id="L71">        return buildResponse(HttpStatus.BAD_REQUEST, message, List.of());</span>
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity&lt;Map&lt;String, Object&gt;&gt; handleTypeMismatch(
+            MethodArgumentTypeMismatchException ex) {
+<span class="fc" id="L77">        String message = String.format(&quot;Invalid value '%s' for parameter '%s'&quot;,</span>
+<span class="fc" id="L78">                ex.getValue(), ex.getName());</span>
+<span class="fc" id="L79">        return buildResponse(HttpStatus.BAD_REQUEST, message, List.of());</span>
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity&lt;Map&lt;String, Object&gt;&gt; handleMessageNotReadable(
+            HttpMessageNotReadableException ex) {
+<span class="fc" id="L85">        return buildResponse(HttpStatus.BAD_REQUEST, &quot;Invalid request body&quot;, List.of());</span>
+    }
+
+    @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
+    public ResponseEntity&lt;Map&lt;String, Object&gt;&gt; handleMediaTypeNotSupported(
+            HttpMediaTypeNotSupportedException ex) {
+<span class="fc" id="L91">        String message = String.format(&quot;Content type '%s' is not supported&quot;, ex.getContentType());</span>
+<span class="fc" id="L92">        return buildResponse(HttpStatus.UNSUPPORTED_MEDIA_TYPE, message, List.of());</span>
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity&lt;Map&lt;String, Object&gt;&gt; handleGenericException(Exception ex) {
+<span class="nc" id="L97">        log.error(&quot;Unexpected error: {}&quot;, ex.getMessage(), ex);</span>
+<span class="nc" id="L98">        return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR,</span>
+<span class="nc" id="L99">                &quot;An unexpected error occurred&quot;, List.of());</span>
+    }
+
+    private ResponseEntity&lt;Map&lt;String, Object&gt;&gt; buildResponse(
+            HttpStatus status, String message, List&lt;String&gt; errors) {
+<span class="fc" id="L104">        Map&lt;String, Object&gt; body = new LinkedHashMap&lt;&gt;();</span>
+<span class="fc" id="L105">        body.put(&quot;timestamp&quot;, LocalDateTime.now());</span>
+<span class="fc" id="L106">        body.put(&quot;status&quot;, status.value());</span>
+<span class="fc" id="L107">        body.put(&quot;error&quot;, status.getReasonPhrase());</span>
+<span class="fc" id="L108">        body.put(&quot;message&quot;, message);</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">        if (!errors.isEmpty()) {</span>
+<span class="fc" id="L110">            body.put(&quot;errors&quot;, errors);</span>
+        }
+<span class="fc" id="L112">        return ResponseEntity.status(status).body(body);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
